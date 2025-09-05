@@ -16,18 +16,18 @@ export default defineConfig({
   plugins: [
     svgr(),
     react(),
-    legacy({
-      renderLegacyChunks: false,
-      modernTargets: ["edge>=109", "safari>=13"],
-      modernPolyfills: true,
-      additionalModernPolyfills: [
-        "core-js/modules/es.object.has-own.js",
-        "core-js/modules/web.structured-clone.js",
-        path.resolve("./src/polyfills/matchMedia.js"),
-        path.resolve("./src/polyfills/WeakRef.js"),
-        path.resolve("./src/polyfills/RegExp.js"),
-      ],
-    }),
+    // legacy({
+    //   renderLegacyChunks: false,
+    //   modernTargets: ["edge>=109", "safari>=13"],
+    //   modernPolyfills: true,
+    //   additionalModernPolyfills: [
+    //     "core-js/modules/es.object.has-own.js",
+    //     "core-js/modules/web.structured-clone.js",
+    //     path.resolve("./src/polyfills/matchMedia.js"),
+    //     path.resolve("./src/polyfills/WeakRef.js"),
+    //     path.resolve("./src/polyfills/RegExp.js"),
+    //   ],
+    // }),
     monacoEditorPluginDefault({
       languageWorkers: ["editorWorkerService", "typescript", "css"],
       customWorkers: [
@@ -43,12 +43,12 @@ export default defineConfig({
     outDir: "../dist",
     emptyOutDir: true,
     target: "es2020",
-    minify: "terser",
+    minify: false,
     chunkSizeWarningLimit: 4000,
     reportCompressedSize: false,
     sourcemap: false,
     cssCodeSplit: true,
-    cssMinify: true,
+    cssMinify: false,
     rollupOptions: {
       treeshake: {
         preset: "recommended",

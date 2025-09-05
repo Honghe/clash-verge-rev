@@ -83,7 +83,6 @@ isahc = { version = "1.7.2", default-features = false, features = [
   "parking_lot",
 ] }
 
-
 [target.'cfg(windows)'.dependencies]
 runas = "=1.2.0"
 deelevate = "0.2.0"
@@ -125,17 +124,17 @@ strip = true
 
 [profile.dev]
 incremental = true
-codegen-units = 256 # 增加编译单元，提升编译速度
+codegen-units = 32 # 增加编译单元，提升编译速度
 opt-level = 0       # 禁用优化，进一步提升编译速度
 debug = true        # 保留调试信息
 strip = false       # 不剥离符号，保留调试信息
 
 [profile.fast-release]
 inherits = "release" # 继承 release 的配置
-panic = "abort"      # 与 release 相同
-codegen-units = 256  # 增加编译单元，提升编译速度
+panic = "unwind"     # 覆盖 release 的 panic = "abort"
+codegen-units = 32   # 增加编译单元，提升编译速度
 lto = false          # 禁用 LTO，提升编译速度
-opt-level = 0        # 禁用优化，大幅提升编译速度
+opt-level = 1        # 使用最小优化，避免完全无优化
 debug = true         # 保留调试信息
 strip = false        # 不剥离符号，保留调试信息
 
