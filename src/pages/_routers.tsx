@@ -4,7 +4,6 @@ import ProfilesPage from "./profiles";
 import SettingsPage from "./settings";
 import ConnectionsPage from "./connections";
 import RulesPage from "./rules";
-import HomePage from "./home";
 import UnlockPage from "./unlock";
 import { BaseErrorBoundary } from "@/components/base";
 
@@ -27,12 +26,6 @@ import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import LockOpenRoundedIcon from "@mui/icons-material/LockOpenRounded";
 
 export const routers = [
-  {
-    label: "Label-Home",
-    path: "/home",
-    icon: [<HomeRoundedIcon />, <HomeSvg />],
-    element: <HomePage />,
-  },
   {
     label: "Label-Proxies",
     path: "/",
