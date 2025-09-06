@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import useSWR from "swr";
 import { useClashInfo } from "@/hooks/use-clash";
 import { useVisibility } from "@/hooks/use-visibility";
+import { useTauriWindowVisibility } from "@/hooks/use-tauri-window-visibility";
 import { getSystemMonitorOverviewSafe } from "@/services/cmds";
 
 // 增强的流量数据点接口
@@ -182,6 +183,10 @@ let lastValidData: ISystemMonitorOverview | null = null;
 export const useTrafficMonitorEnhanced = () => {
   const { clashInfo } = useClashInfo();
   const pageVisible = useVisibility();
+  const windowVisible = useTauriWindowVisibility();
+
+  // 综合可见性判断：页面可见 AND 窗口可见
+  const isVisible = pageVisible && windowVisible;
 
   // 初始化采样器
   if (!globalSampler) {
@@ -230,7 +235,7 @@ export const useTrafficMonitorEnhanced = () => {
   }, []);
 
   // 只有在有引用时才启用SWR
-  const shouldFetch = clashInfo && pageVisible && refCounter.getCount() > 0;
+  const shouldFetch = clashInfo && isVisible && refCounter.getCount() > 0;
 
   const { data: monitorData, error } = useSWR<ISystemMonitorOverview>(
     shouldFetch ? "getSystemMonitorOverviewSafe" : null,

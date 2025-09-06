@@ -943,7 +943,9 @@ impl CoreManager {
 
             let service_state = service::ServiceState::get().await;
 
-            if service_state.prefer_sidecar {
+            // fixme: 临时强制使用 sidecar，方便debug，后续可移除
+            if true{
+            // if service_state.prefer_sidecar {
                 logging!(
                     info,
                     Type::Core,

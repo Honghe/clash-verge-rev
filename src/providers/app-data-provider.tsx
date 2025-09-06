@@ -25,6 +25,7 @@ import {
 } from "@/services/cmds";
 import { useClashInfo } from "@/hooks/use-clash";
 import { useVisibility } from "@/hooks/use-visibility";
+import { useTauriWindowVisibility } from "@/hooks/use-tauri-window-visibility";
 import { listen } from "@tauri-apps/api/event";
 
 // 连接速度计算接口
@@ -79,8 +80,22 @@ export const AppDataProvider = ({
   children: React.ReactNode;
 }) => {
   const pageVisible = useVisibility();
+  const windowVisible = useTauriWindowVisibility();
   const { clashInfo } = useClashInfo();
   const { verge } = useVerge();
+
+  // 综合可见性判断：页面可见 AND 窗口可见
+  const isVisible = pageVisible && windowVisible;
+
+  // 添加调试日志
+  useEffect(() => {
+    console.log("[AppDataProvider] Visibility state changed:", {
+      pageVisible,
+      windowVisible,
+      isVisible,
+      clashInfo: !!clashInfo
+    });
+  }, [pageVisible, windowVisible, isVisible, clashInfo]);
 
   // 存储上一次连接数据用于速度计算
   const previousConnectionsRef = useRef<Map<string, ConnectionSpeedData>>(
@@ -130,7 +145,7 @@ export const AppDataProvider = ({
 
   // 基础数据 - 中频率更新 (5秒)
   const { data: proxiesData, mutate: refreshProxy } = useSWR(
-    "getProxies",
+    clashInfo && isVisible ? "getProxies" : null,
     getProxies,
     {
       refreshInterval: 5000,
@@ -336,7 +351,7 @@ export const AppDataProvider = ({
   }, [refreshProxy]);
 
   const { data: clashConfig, mutate: refreshClashConfig } = useSWR(
-    "getClashConfig",
+    clashInfo && isVisible ? "getClashConfig" : null,
     getClashConfig,
     {
       refreshInterval: 60000, // 60秒刷新间隔，减少频繁请求
@@ -381,7 +396,7 @@ export const AppDataProvider = ({
   );
 
   const { data: sysproxy, mutate: refreshSysproxy } = useSWR(
-    "getSystemProxy",
+    clashInfo && isVisible ? "getSystemProxy" : null,
     getSystemProxy,
     {
       revalidateOnFocus: true,
@@ -398,7 +413,7 @@ export const AppDataProvider = ({
   });
 
   // 高频率更新数据 (2秒)
-  const { data: uptimeData } = useSWR("appUptime", getAppUptime, {
+  const { data: uptimeData } = useSWR(clashInfo && isVisible ? "appUptime": null, getAppUptime, {
     refreshInterval: 2000,
     revalidateOnFocus: false,
     suspense: false,
@@ -412,7 +427,7 @@ export const AppDataProvider = ({
       downloadTotal: 0,
     },
   } = useSWR(
-    clashInfo && pageVisible ? "getConnections" : null,
+    clashInfo && isVisible ? "getConnections" : null,
     async () => {
       const data = await getConnections();
       const rawConnections: IConnectionsItem[] = data.connections || [];
@@ -451,7 +466,7 @@ export const AppDataProvider = ({
 
   // 流量数据 - 使用IPC轮询更新
   const { data: trafficData = { up: 0, down: 0 } } = useSWR(
-    clashInfo && pageVisible ? "getTrafficData" : null,
+    clashInfo && isVisible ? "getTrafficData" : null,
     getTrafficData,
     {
       refreshInterval: 1000, // 1秒刷新一次
@@ -468,7 +483,7 @@ export const AppDataProvider = ({
 
   // 内存数据 - 使用IPC轮询更新
   const { data: memoryData = { inuse: 0 } } = useSWR(
-    clashInfo && pageVisible ? "getMemoryData" : null,
+    clashInfo && isVisible ? "getMemoryData" : null,
     getMemoryData,
     {
       refreshInterval: 2000, // 2秒刷新一次

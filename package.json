@@ -3,9 +3,9 @@
   "version": "2.4.2",
   "license": "GPL-3.0-only",
   "scripts": {
-    "dev": "cross-env RUST_BACKTRACE=1 tauri dev -f verge-dev",
+    "dev": "cross-env RUST_BACKTRACE=1 tauri dev -v -f verge-dev",
     "dev:diff": "cross-env RUST_BACKTRACE=1 tauri dev -f verge-dev",
-    "dev:trace": "cross-env RUST_BACKTRACE=1 RUSTFLAGS=\"--cfg tokio_unstable\" tauri dev -f verge-dev tokio-trace",
+    "dev:trace": "cross-env RUST_BACKTRACE=1 RUSTFLAGS=\"--cfg tokio_unstable\" tauri dev -v --no-watch -f verge-dev tokio-trace",
     "build": "cross-env NODE_OPTIONS='--max-old-space-size=4096' tauri build",
     "build:fast": "cross-env NODE_OPTIONS='--max-old-space-size=4096' tauri build -v --no-bundle -- --profile fast-release",
     "tauri": "tauri",
