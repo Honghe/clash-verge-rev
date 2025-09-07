@@ -42,12 +42,12 @@ export default defineConfig({
   build: {
     outDir: "../dist",
     emptyOutDir: true,
-    minify: "terser",
+    minify: false,
     chunkSizeWarningLimit: 4000,
     reportCompressedSize: false,
     sourcemap: false,
     cssCodeSplit: true,
-    cssMinify: true,
+    cssMinify: false,
     terserOptions: {
       compress: {
         drop_console: false,
