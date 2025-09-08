@@ -44,7 +44,7 @@ serde = { version = "1.0.219", features = ["derive"] }
 reqwest = { version = "0.12.23", features = ["json", "cookies"] }
 regex = "1.11.2"
 sysproxy = { git = "https://github.com/clash-verge-rev/sysproxy-rs" }
-tauri = { version = "2.8.5", features = [
+tauri = { git = "https://github.com/tauri-apps/tauri", rev = "810e9e9", features = [
   "protocol-asset",
   "devtools",
   "tray-icon",
@@ -135,7 +135,7 @@ inherits = "release" # 继承 release 的配置
 panic = "unwind"      # 与 release 相同
 codegen-units = 32   # 增加编译单元，提升编译速度
 lto = false          # 禁用 LTO，提升编译速度
-opt-level = 1        # 禁用优化，大幅提升编译速度
+opt-level = 0        # 禁用优化，大幅提升编译速度
 debug = true         # 保留调试信息
 strip = false        # 不剥离符号，保留调试信息
 
@@ -196,3 +196,13 @@ needless_raw_string_hashes = "deny" # Too many in existing code
 #pedantic = { level = "allow", priority = -1 }
 #nursery = { level = "allow", priority = -1 }
 #restriction = { level = "allow", priority = -1 }
+
+# Patch crates.io tauri to use our git version, resolving conflicts with plugins
+[patch.crates-io]
+tauri = { git = "https://github.com/tauri-apps/tauri", rev = "810e9e9" }
+tauri-build = { git = "https://github.com/tauri-apps/tauri", rev = "810e9e9" }
+tauri-codegen = { git = "https://github.com/tauri-apps/tauri", rev = "810e9e9" }
+tauri-macros = { git = "https://github.com/tauri-apps/tauri", rev = "810e9e9" }
+tauri-runtime = { git = "https://github.com/tauri-apps/tauri", rev = "810e9e9" }
+tauri-runtime-wry = { git = "https://github.com/tauri-apps/tauri", rev = "810e9e9" }
+tauri-utils = { git = "https://github.com/tauri-apps/tauri", rev = "810e9e9" }
