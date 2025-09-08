@@ -135,7 +135,7 @@ inherits = "release" # 继承 release 的配置
 panic = "unwind"      # 与 release 相同
 codegen-units = 32   # 增加编译单元，提升编译速度
 lto = false          # 禁用 LTO，提升编译速度
-opt-level = 3        # 禁用优化，大幅提升编译速度
+opt-level = 1        # 禁用优化，大幅提升编译速度
 debug = true         # 保留调试信息
 strip = false        # 不剥离符号，保留调试信息
 

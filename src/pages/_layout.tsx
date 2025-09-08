@@ -16,7 +16,7 @@ import iconLight from "@/assets/image/icon_light.svg?react";
 import iconDark from "@/assets/image/icon_dark.svg?react";
 import { useThemeMode, useEnableLog } from "@/services/states";
 import { LayoutItem } from "@/components/layout/layout-item";
-import { LayoutTraffic } from "@/components/layout/layout-traffic";
+// import { LayoutTraffic } from "@/components/layout/layout-traffic";
 import { UpdateButton } from "@/components/layout/update-button";
 import { useCustomTheme } from "@/components/layout/use-custom-theme";
 import getSystem from "@/utils/get-system";
@@ -583,7 +583,7 @@ const Layout = () => {
             </List>
 
             <div className="the-traffic">
-              <LayoutTraffic />
+              {/* <LayoutTraffic /> */}
             </div>
           </div>
 

@@ -202,7 +202,7 @@ mod app_init {
             cmd::start_logs_monitoring,
             cmd::stop_logs_monitoring,
             cmd::clear_logs,
-            cmd::get_system_monitor_overview,
+            // cmd::get_system_monitor_overview,
             cmd::start_traffic_service,
             cmd::stop_traffic_service,
             // Verge configuration
