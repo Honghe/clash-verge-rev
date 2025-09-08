@@ -14,8 +14,8 @@ import {
   getProxyProviders,
   getRuleProviders,
   getConnections,
-  getTrafficData,
-  getMemoryData,
+  // getTrafficData,
+  // getMemoryData,
 } from "@/services/cmds";
 import {
   getSystemProxy,
@@ -56,8 +56,8 @@ interface AppDataContextType {
     uploadTotal: number;
     downloadTotal: number;
   };
-  traffic: { up: number; down: number };
-  memory: { inuse: number };
+  // traffic: { up: number; down: number };
+  // memory: { inuse: number };
   systemProxyAddress: string;
 
   refreshProxy: () => Promise<any>;
@@ -449,36 +449,36 @@ export const AppDataProvider = ({
     },
   );
 
-  // 流量数据 - 使用IPC轮询更新
-  const { data: trafficData = { up: 0, down: 0 } } = useSWR(
-    clashInfo && pageVisible ? "getTrafficData" : null,
-    getTrafficData,
-    {
-      refreshInterval: 1000, // 1秒刷新一次
-      fallbackData: { up: 0, down: 0 },
-      keepPreviousData: true,
-      onSuccess: () => {
-        // console.log("[Traffic][AppDataProvider] IPC 获取到流量数据:", data);
-      },
-      onError: (error) => {
-        console.error("[Traffic][AppDataProvider] IPC 获取数据错误:", error);
-      },
-    },
-  );
+  // // 流量数据 - 使用IPC轮询更新
+  // const { data: trafficData = { up: 0, down: 0 } } = useSWR(
+  //   clashInfo && pageVisible ? "getTrafficData" : null,
+  //   getTrafficData,
+  //   {
+  //     refreshInterval: 1000, // 1秒刷新一次
+  //     fallbackData: { up: 0, down: 0 },
+  //     keepPreviousData: true,
+  //     onSuccess: () => {
+  //       // console.log("[Traffic][AppDataProvider] IPC 获取到流量数据:", data);
+  //     },
+  //     onError: (error) => {
+  //       console.error("[Traffic][AppDataProvider] IPC 获取数据错误:", error);
+  //     },
+  //   },
+  // );
 
-  // 内存数据 - 使用IPC轮询更新
-  const { data: memoryData = { inuse: 0 } } = useSWR(
-    clashInfo && pageVisible ? "getMemoryData" : null,
-    getMemoryData,
-    {
-      refreshInterval: 2000, // 2秒刷新一次
-      fallbackData: { inuse: 0 },
-      keepPreviousData: true,
-      onError: (error) => {
-        console.error("[Memory] IPC 获取数据错误:", error);
-      },
-    },
-  );
+  // // 内存数据 - 使用IPC轮询更新
+  // const { data: memoryData = { inuse: 0 } } = useSWR(
+  //   clashInfo && pageVisible ? "getMemoryData" : null,
+  //   getMemoryData,
+  //   {
+  //     refreshInterval: 2000, // 2秒刷新一次
+  //     fallbackData: { inuse: 0 },
+  //     keepPreviousData: true,
+  //     onError: (error) => {
+  //       console.error("[Memory] IPC 获取数据错误:", error);
+  //     },
+  //   },
+  // );
 
   // 提供统一的刷新方法
   const refreshAll = async () => {
@@ -547,8 +547,8 @@ export const AppDataProvider = ({
       },
 
       // 实时流量数据
-      traffic: trafficData,
-      memory: memoryData,
+      // traffic: trafficData,
+      // memory: memoryData,
 
       systemProxyAddress: calculateSystemProxyAddress(),
 
@@ -569,8 +569,8 @@ export const AppDataProvider = ({
     runningMode,
     uptimeData,
     connectionsData,
-    trafficData,
-    memoryData,
+    // trafficData,
+    // memoryData,
     proxyProviders,
     ruleProviders,
     verge,
