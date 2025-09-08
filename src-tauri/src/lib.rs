@@ -182,6 +182,7 @@ mod app_init {
             cmd::check_dns_config_exists,
             cmd::get_dns_config_content,
             cmd::validate_dns_config,
+            cmd::get_clash_version,
             cmd::get_clash_config,
             cmd::force_refresh_clash_config,
             cmd::update_geo_data,
